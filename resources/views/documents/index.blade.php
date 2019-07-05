@@ -3,7 +3,16 @@
 @section('main')
 <div class="row">
 <div class="col-sm-12">
+
+@if(session()->get('success'))
+  <div class="alert alert-success">
+    {{ session()->get('success') }}  
+  </div>
+@endif
+</div>
+<div class="col-sm-12">
     <h2 class="display-6">文章列表</h1>
+    <a style="margin: 19px;" href="{{ route('documents.create') }}" class="new-btn btn btn-primary">新增</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -24,7 +33,7 @@
                 <td>{{$doc->ctime}}</td>
                 <td>{{$doc->mtime}}</td>
                 <td>
-                    <a href="{{ route('documents.edit',$doc->id) }}" class="btn btn-primary">編輯</a>
+                    <a href="{{ route('documents.edit', $doc->id) }}" class="btn btn-primary">編輯</a>
                 </td>
                 <td>
                     <form action="{{ route('documents.destroy', $doc->id)}}" method="post">
