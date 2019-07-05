@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -13,7 +14,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        //
+        $documents = Document::all();
+
+        return view('documents.index', compact('documents'));
     }
 
     /**
@@ -23,7 +26,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+        return view('documents.create');
     }
 
     /**
@@ -34,7 +37,24 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        $document = new Document([
+            'author' => 'admin@test.com',
+            'title' => $request->get('title'),
+            'content' => $request->get('content'),
+            'ctime' => date('Y-m-d h:i:u'),
+            'mtime' => date('Y-m-d h:i:u'),
+            'hashtag' => '',
+            'status' => $request->get('status')
+        ]);
+
+        $ret = $document->save();
+
+        return redirect('/documents/create')->with('success', 'Document saved!');
     }
 
     /**
