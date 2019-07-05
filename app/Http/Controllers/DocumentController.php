@@ -54,7 +54,7 @@ class DocumentController extends Controller
 
         $ret = $document->save();
 
-        return redirect('/documents/create')->with('success', 'Document saved!');
+        return redirect('/documents')->with('success', 'Document saved!');
     }
 
     /**
@@ -76,7 +76,14 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $document = Document::find($id);
+        $options = [
+            0 => "隱私發佈",
+            1 => "公開發佈",
+            2 => "暫存稿件"
+        ];
+
+        return view('documents.edit', compact('document', 'options'));
     }
 
     /**
@@ -88,8 +95,20 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        $document = Document::find($id);
+        $document->title = $request->get('title');
+        $document->content = $request->get('content');
+        $document->mtime = date('Y-m-d h:i:u');
+        $document->status = $request->get('status');
+
+        $ret = $document->save();
+
+        return redirect('/documents')->with('success', 'Document updated!');    }
 
     /**
      * Remove the specified resource from storage.
@@ -99,6 +118,9 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $document = Document::find($id);
+        $document->delete();
+
+        return redirect('/documents')->with('success', 'Document deleted!');
     }
 }
