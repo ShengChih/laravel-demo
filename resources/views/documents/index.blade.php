@@ -3,8 +3,16 @@
 @section('main')
 <div class="row">
 <div class="col-sm-12">
+
+@if(session()->get('success'))
+  <div class="alert alert-success">
+    {{ session()->get('success') }}  
+  </div>
+@endif
+</div>
+<div class="col-sm-12">
     <h2 class="display-6">文章列表</h1>
-    <a href="{{ route('documents.create') }}" class="new-btn btn btn-primary">新增</a>
+    <a style="margin: 19px;" href="{{ route('documents.create') }}" class="new-btn btn btn-primary">新增</a>
     <table class="table table-striped">
         <thead>
             <tr>
