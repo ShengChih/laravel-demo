@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('documents', 'DocumentController');
+// need to check authentication
+Route::resource('documents', 'DocumentController')
+    ->middleware('auth');
 
 Auth::routes();
 

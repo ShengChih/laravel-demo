@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
@@ -43,7 +44,7 @@ class DocumentController extends Controller
         ]);
 
         $document = new Document([
-            'author' => 'admin@test.com',
+            'author' => Auth::user()->email,
             'title' => $request->get('title'),
             'content' => $request->get('content'),
             'ctime' => date('Y-m-d h:i:u'),
