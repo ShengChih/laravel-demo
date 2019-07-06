@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 // need to check authentication
 Route::resource('documents', 'DocumentController')
@@ -21,4 +21,5 @@ Route::resource('documents', 'DocumentController')
 
 Auth::routes();
 
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
