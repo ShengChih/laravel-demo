@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class DocumentController extends Controller
 {
@@ -27,6 +29,8 @@ class DocumentController extends Controller
      */
     public function create()
     {
+        Log::info(Auth::user()->email." 正打算寫一篇文章");
+
         return view('documents.create');
     }
 
@@ -38,6 +42,8 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info(Auth::user()->email." 新增一篇文章");
+
         $request->validate([
             'title' => 'required',
             'content' => 'required'
@@ -77,6 +83,8 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
+        Log::info(Auth::user()->email." 正在編輯文章....");
+
         $document = Document::find($id);
         $options = [
             0 => "隱私發佈",
@@ -96,6 +104,8 @@ class DocumentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Log::info(Auth::user()->email." 更新文章");
+
         $request->validate([
             'title' => 'required',
             'content' => 'required'
@@ -119,6 +129,8 @@ class DocumentController extends Controller
      */
     public function destroy($id)
     {
+        Log::info(Auth::user()->email." 刪除文章");
+
         $document = Document::find($id);
         $document->delete();
 
